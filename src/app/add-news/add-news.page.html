@@ -1,13 +1,14 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Add News</ion-title>
+    <ion-progress-bar type="indeterminate" *ngIf="loading | async"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-grid>
-    <ion-row>
-      <ion-col size="4">
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col [size]="fullScreen ? 12 : 4">
         <ion-card>
           <ion-card-content>
             <form [formGroup]="newsForm">

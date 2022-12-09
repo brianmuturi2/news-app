@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, delay} from 'rxjs';
+import {ToastController} from '@ionic/angular';
+import {map} from 'rxjs/operators';
 
 export interface News {
-  id: string;
+  id?: string;
   image: string;
   title: string;
   date: Date | string;
   description: string;
+}
+
+export interface NewsResponse {
+  [key: string]: News
 }
 
 @Injectable({
@@ -17,15 +23,30 @@ export class NewsService {
 
   public isLoading = new BehaviorSubject(false);
 
-  dummyUrl = '/assets/dummy.json';
   firebaseUrl = 'https://news-ce465-default-rtdb.firebaseio.com/users';
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient,
+              private _toastController: ToastController) { }
 
-  getNews() {
-    return this._http.get<News[]>(`${this.firebaseUrl}.json`);
+  addNews(payload: News) {
+    return this._http.post(`${this.firebaseUrl}.json`, payload);
   }
 
-  deleteNews(id: number) {
+  /* Format news from firebase object structure to array for ease of looping in template and deleting an item*/
+  getNews() {
+    return this._http.get<NewsResponse>(`${this.firebaseUrl}.json`).pipe(map(res => Object.entries(res)));
+  }
+
+  deleteNews(id: string) {
     return this._http.delete(`${this.firebaseUrl}/${id}.json`);
+  }
+
+  async showError() {
+    const toast = await this._toastController.create({
+      message: 'Could not complete request!',
+      duration: 1500,
+      position: 'middle'
+    });
+
+    await toast.present();
   }
 }

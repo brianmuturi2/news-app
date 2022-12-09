@@ -27,6 +27,7 @@ export class RequestInterceptor implements HttpInterceptor{
             }),
             catchError((error: HttpErrorResponse) => {
                 this._newsService.isLoading.next(false);
+                this._newsService.showError();
                 return throwError(error);
             })
         )
