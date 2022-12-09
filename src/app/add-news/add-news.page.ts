@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-add-news',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddNewsPage implements OnInit {
 
-  constructor() { }
+  newsForm: FormGroup;
+  showSelectDate: boolean;
+
+  constructor(private _formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.newsForm = this._formBuilder.group({
+      title: ['', Validators.required],
+      date: ['', Validators.required],
+      description: ['', Validators.required]
+    });
   }
+
+  addNews(){
+
+  }
+
 
 }

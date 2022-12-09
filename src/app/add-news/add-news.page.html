@@ -5,5 +5,32 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4">
+        <ion-card>
+          <ion-card-content>
+            <form [formGroup]="newsForm">
+                <ion-list>
+                <ion-item class="formItem">
+                  <ion-label position="floating">Enter Title</ion-label>
+                  <ion-input placeholder="Title" formControlName="title"></ion-input>
+                </ion-item>
+                <ion-item lines="full" class="formItem" button (click)="showSelectDate = !showSelectDate">
+                  <ion-text>Select Date</ion-text>
+                  <ion-text slot="end">{{newsForm.value.date  | date}}</ion-text>
+                </ion-item>
+                <ion-datetime *ngIf="showSelectDate" presentation="date" formControlName="date" (ionChange)="showSelectDate = !showSelectDate"></ion-datetime>
+                <ion-item class="formItem">
+                  <ion-label position="floating">Enter Description</ion-label>
+                  <ion-textarea placeholder="Description" formControlName="description"></ion-textarea>
+                </ion-item>
+                </ion-list>
+            </form>
+            <ion-button expand="full" style="margin-top: 10px" (click)="addNews()" [disabled]="newsForm.invalid">Add <ion-icon name="add-circle-outline" slot="end"></ion-icon></ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
