@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject} from 'rxjs';
 
 export interface News {
   id: string;
@@ -14,14 +15,17 @@ export interface News {
 })
 export class NewsService {
 
+  public isLoading = new BehaviorSubject(false);
+
   dummyUrl = '/assets/dummy.json';
+  firebaseUrl = 'https://news-ce465-default-rtdb.firebaseio.com/users';
   constructor(private _http: HttpClient) { }
 
   getNews() {
-    return this._http.get<News[]>(this.dummyUrl);
+    return this._http.get<News[]>(`${this.firebaseUrl}.json`);
   }
 
-  deleteNews(id: string) {
-    return this._http.delete(`${this.dummyUrl}/${id}`);
+  deleteNews(id: number) {
+    return this._http.delete(`${this.firebaseUrl}/${id}.json`);
   }
 }

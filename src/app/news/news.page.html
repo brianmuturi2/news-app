@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>News</ion-title>
+      <ion-progress-bar type="indeterminate" *ngIf="loading | async"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
@@ -8,18 +9,19 @@
   <ion-grid>
     <ion-row>
       <ion-col size="4">
-        <ion-card *ngFor="let news of (news$ | async)">
-          <img [src]="news.image" style="width: 100%; height: 100px"/>
-          <ion-card-header>
-            <ion-card-title>{{news.title}}</ion-card-title>
-            <ion-card-subtitle>{{news.date}}</ion-card-subtitle>
-          </ion-card-header>
+        <ion-card *ngFor="let news of (news$ | async); let i = index;">
+            <ng-container *ngIf="news">
+                <img [src]="news.image" style="width: 100%; height: 100px"/>
+                <ion-card-header>
+                    <ion-card-title>{{news.title}}</ion-card-title>
+                    <ion-card-subtitle>{{news.date}}</ion-card-subtitle>
+                </ion-card-header>
 
-          <ion-card-content>
-            {{news.description}}
-            <ion-button expand="full" style="margin-top: 10px" color="warning" (click)="deleteNews(news.id)">Delete <ion-icon name="trash-outline" slot="end"></ion-icon></ion-button>
-          </ion-card-content>
-
+                <ion-card-content>
+                    {{news.description}}
+                    <ion-button expand="full" style="margin-top: 10px" color="warning" (click)="deleteNews(i)">Delete <ion-icon name="trash-outline" slot="end"></ion-icon></ion-button>
+                </ion-card-content>
+            </ng-container>
         </ion-card>
       </ion-col>
     </ion-row>
