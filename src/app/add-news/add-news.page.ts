@@ -17,6 +17,7 @@ export class AddNewsPage implements OnInit {
   showSelectDate: boolean;
 
   fullScreen = false;
+  isWeb = false;
 
   constructor(private _formBuilder: FormBuilder,
               private _newsService: NewsService,
