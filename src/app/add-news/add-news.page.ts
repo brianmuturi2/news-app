@@ -40,6 +40,13 @@ export class AddNewsPage implements OnInit {
 
   addNews(){
     this._newsService.addNews(this.newsForm.value).subscribe(res => {
+
+      this.newsForm.patchValue({
+        title: '',
+        date: '',
+        description: ''
+      });
+
       this._router.navigate(['/tabs/news']);
     })
   }

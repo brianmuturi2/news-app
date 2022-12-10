@@ -23,7 +23,7 @@ export class NewsService {
 
   public isLoading = new BehaviorSubject(false);
 
-  firebaseUrl = 'https://news-ce465-default-rtdb.firebaseio.com/users';
+  firebaseUrl = 'https://homework-9a4c1-default-rtdb.firebaseio.com/users';
   constructor(private _http: HttpClient,
               private _toastController: ToastController) { }
 
